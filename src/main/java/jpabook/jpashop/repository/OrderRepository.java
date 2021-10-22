@@ -2,9 +2,8 @@ package jpabook.jpashop.repository;
 
 import jpabook.jpashop.domain.Member;
 import jpabook.jpashop.domain.Order;
-import jpabook.jpashop.domain.OrderStatus;
+import jpabook.jpashop.domain.OrderSearch;
 import lombok.RequiredArgsConstructor;
-import org.hibernate.query.criteria.internal.predicate.BooleanExpressionPredicate;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
 
@@ -37,7 +36,7 @@ public class OrderRepository {
 //                .select(order)
 //                .from(order)
 //                .join(order.member, member)
-//                .where(ststusEq(orderSearch.getOrderStatus()),
+//                .where(statusEq(orderSearch.getOrderStatus()),
 //                        nameLike(orderSearch.getMemberName()))
 //                .limit(1000)
 //                .fetch();

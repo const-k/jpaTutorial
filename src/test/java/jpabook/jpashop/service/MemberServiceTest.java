@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -18,6 +19,7 @@ public class MemberServiceTest {
     @Autowired MemberRepository memberRepository;
 
     @Test
+//    @Rollback(false) // 스프링에서 test에 @Transactional 있으면 기본적으로 롤백을 함
     public void join() throws Exception {
         //given
         Member member = new Member();

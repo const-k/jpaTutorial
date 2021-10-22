@@ -35,7 +35,7 @@ public class Order {
 
     private LocalDateTime orderDate; // 주문 시간
 
-    @Enumerated(EnumType.STRING)
+    @Enumerated(EnumType.STRING) // default인 ordinal 사용하면 enum 중간에 상태 추가 시 장애
     private OrderStatus status; // 주문상태 [ORDER, CANCLE]
 
     //== 연관관계 편의 메서드, 양방향의 관계를 설정하는 편의 메서드 ==//
