@@ -6,6 +6,7 @@ import jpabook.jpashop.repository.order.query.OrderFlatDto;
 import jpabook.jpashop.repository.order.query.OrderItemQueryDto;
 import jpabook.jpashop.repository.order.query.OrderQueryDto;
 import jpabook.jpashop.repository.order.query.OrderQueryRepository;
+import jpabook.jpashop.service.query.OrderQueryService;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,9 +25,10 @@ import static java.util.stream.Collectors.*;
 public class OrderApiController {
     private final OrderRepository orderRepository;
     private final OrderQueryRepository orderQueryRepository;
-
+    private final OrderQueryService orderQueryService;
 
     @GetMapping("/api/v1/orders")
+
     public List<Order> ordersV1() {
         List<Order> all = orderRepository.findAllByCriteria(new OrderSearch());
 
@@ -61,6 +63,11 @@ public class OrderApiController {
         return new Result(collect);
     }
 
+//    @GetMapping("/api/v3/orders") // spring.jpa.open-in-view : false 로 하면 지연로딩 로직을 @Transactional 안에서 처리해야함
+//    public Result ordersV3() {
+//        return orderQueryService.ordersV3();
+//    }
+
     @GetMapping("/api/v3.1/orders")
     public Result ordersV3_page(
             @RequestParam(value = "offset", defaultValue = "0") int offset,
@@ -73,6 +80,7 @@ public class OrderApiController {
 
         return new Result(collect);
     }
+
 
     @GetMapping("/api/v4/orders")
     public Result ordersV4() {
@@ -119,7 +127,7 @@ public class OrderApiController {
 
         public OrderDto(Order order) {
             orderId = order.getId();
-            name = order.getMember().getName();
+            name = order.getMember().getName(); // Lazy 로딩 초기화, 영속성 컨텍스트가 영속성 찾아보고 없으면 DB에 쿼리 날림
             orderDate = order.getOrderDate();
             orderStatus = order.getStatus();
             address = order.getDelivery().getAddress();
