@@ -1,7 +1,9 @@
 package jpabook.jpashop;
 
+import com.fasterxml.jackson.datatype.hibernate5.Hibernate5Module;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
 
 @SpringBootApplication
 public class JpashopApplication {
@@ -13,4 +15,10 @@ public class JpashopApplication {
         SpringApplication.run(JpashopApplication.class, args);
     }
 
+    @Bean
+    Hibernate5Module hibernate5Module() {       // ByteBuddyInterceptor 에러 해결하기 위해 만듦, Entity를 직접 노출할 것이 아니기 때문에 실제로는 사용할 일 없을듯
+        Hibernate5Module hibernate5Module = new Hibernate5Module();
+//        hibernate5Module.configure(Hibernate5Module.Feature.FORCE_LAZY_LOADING, true);
+        return hibernate5Module;
+    }
 }

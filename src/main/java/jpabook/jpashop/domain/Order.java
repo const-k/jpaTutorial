@@ -22,9 +22,9 @@ public class Order {
     @Column(name = "order_id")
     private Long id;
 
-    @ManyToOne(fetch = LAZY)
+    @ManyToOne(fetch = LAZY)        // 지연로딩이기 때문에 직접 new 해서 객체를 가져오는 것이 아니(DB에서 안가져옴)
     @JoinColumn(name = "member_id")
-    private Member member;
+    private Member member;  // 지연로딩 시 hibernate에서 내부적으로 new ProxyMember() 로 프록시 객체 생성해서 넣어둠(ByteBuddyInterceptor())
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL) // cascade => order 를 persist 하면 orderItem 도 persist 함
     private List<OrderItem> orderItems = new ArrayList<>();
